@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DesktopView.Models;
 using DesktopView.Services;
+using DesktopView.Views;
 
 namespace DesktopView.ViewModels;
 
@@ -45,10 +46,6 @@ public partial class MainViewModel : ViewModelBase
     /// <summary>Whether the lab catalog is still loading.</summary>
     [ObservableProperty]
     private bool _isLoadingLabs;
-
-    /// <summary>ViewModel for the embedded settings view/dialog.</summary>
-    [ObservableProperty]
-    private SettingsViewModel? _settings;
 
     /// <summary>ViewModel for the algorithm execution view, created on Start.</summary>
     [ObservableProperty]
@@ -105,24 +102,17 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
-    /// <summary>Opens the embedded settings view (creates the settings VM lazily).</summary>
+    /// <summary>Opens the settings as a modal dialog window.</summary>
     [RelayCommand]
     private async Task OpenSettingsAsync(CancellationToken ct)
     {
-        if (Settings is null)
+        var vm = new SettingsViewModel();
+        var dialog = new Views.SettingsDialog
         {
-            Settings = new SettingsViewModel();
-            Settings.Closed += (_, _) => Settings = null;
-        }
-
-        await Settings.LoadCommand.ExecuteAsync(ct);
-    }
-
-    /// <summary>Closes the embedded settings view.</summary>
-    [RelayCommand]
-    private void CloseSettings()
-    {
-        Settings = null;
+            DataContext = vm,
+        };
+        await vm.LoadCommand.ExecuteAsync(ct);
+        dialog.Show();
     }
 
     /// <summary>Navigates to the Algorithm Execution view for the selected lab/algorithm.</summary>

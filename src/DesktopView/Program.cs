@@ -5,7 +5,7 @@ using Avalonia;
 
 namespace DesktopView;
 
-sealed class Program
+static class Program
 {
     private static StreamWriter? _log;
 

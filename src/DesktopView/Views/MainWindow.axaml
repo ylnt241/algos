@@ -68,20 +68,11 @@
 
         <!-- Algorithm Execution view (shown after Start) -->
         <Panel IsVisible="{Binding IsExecutionVisible}">
-            <ContentControl DataContext="{Binding Execution}"
+            <ContentControl Content="{Binding Execution}"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
                             HorizontalContentAlignment="Stretch"
                             VerticalContentAlignment="Stretch" />
-        </Panel>
-
-        <!-- Embedded Settings dialog (overlay) -->
-        <Panel IsVisible="{Binding Settings, Converter={x:Static ObjectConverters.IsNotNull}}">
-            <Rectangle Fill="#80000000" />
-            <ContentControl DataContext="{Binding Settings}"
-                            MaxWidth="520" MaxHeight="420"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center" />
         </Panel>
     </Grid>
 
