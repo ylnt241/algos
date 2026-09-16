@@ -1,0 +1,41 @@
+{
+  "labs": [
+    {
+      "id": "lab-1",
+      "displayName": "Lab 1 — Sorting Algorithms",
+      "algorithms": [
+        { "id": "bubble-sort",    "displayName": "Bubble Sort",    "theoreticalComplexity": "O(n^2)",     "description": "Adjacent-swap comparison sort." },
+        { "id": "insertion-sort", "displayName": "Insertion Sort",  "theoreticalComplexity": "O(n^2)",     "description": "Incremental insertion sort." },
+        { "id": "merge-sort",    "displayName": "Merge Sort",      "theoreticalComplexity": "O(n log n)", "description": "Divide-and-conquer merge sort." },
+        { "id": "quick-sort",    "displayName": "Quick Sort",      "theoreticalComplexity": "O(n log n)", "description": "Partition-based quicksort." },
+        { "id": "counting-sort", "displayName": "Counting Sort",   "theoreticalComplexity": "O(n)",       "description": "Non-comparison counting sort." }
+      ]
+    },
+    {
+      "id": "lab-2",
+      "displayName": "Lab 2 — Searching Algorithms",
+      "algorithms": [
+        { "id": "linear-search", "displayName": "Linear Search",   "theoreticalComplexity": "O(n)",       "description": "Sequential scan." },
+        { "id": "binary-search",  "displayName": "Binary Search",  "theoreticalComplexity": "O(log n)",   "description": "Divide-and-conquer search on sorted input." }
+      ]
+    },
+    {
+      "id": "lab-3",
+      "displayName": "Lab 3 — Graph Algorithms",
+      "algorithms": [
+        { "id": "bfs",         "displayName": "Breadth-First Search",     "theoreticalComplexity": "O(V + E)",     "description": "Level-order traversal. Plotted as O(n)." },
+        { "id": "dfs",         "displayName": "Depth-First Search",      "theoreticalComplexity": "O(V + E)",     "description": "Recursive traversal. Plotted as O(n)." },
+        { "id": "dijkstra",    "displayName": "Dijkstra (binary heap)", "theoreticalComplexity": "O(n log n)",   "description": "Shortest path with a priority queue." },
+        { "id": "floyd-warshall", "displayName": "Floyd-Warshall",      "theoreticalComplexity": "O(n^3)",         "description": "All-pairs shortest paths." }
+      ]
+    },
+    {
+      "id": "lab-4",
+      "displayName": "Lab 4 — Dynamic Programming",
+      "algorithms": [
+        { "id": "fib-memo",    "displayName": "Fibonacci (memoized)", "theoreticalComplexity": "O(n)",       "description": "Top-down Fibonacci." },
+        { "id": "knapsack-01", "displayName": "0/1 Knapsack",          "theoreticalComplexity": "O(n^2)",     "description": "Tabular knapsack (illustrative)." }
+      ]
+    }
+  ]
+}

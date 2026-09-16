@@ -3,20 +3,86 @@
         xmlns:vm="using:DesktopView.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
         x:Class="DesktopView.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="DesktopView">
+        Title="Algorithm Workbench">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainViewModel />
     </Design.DataContext>
 
-    <TextBox Text="{Binding Greeting}"
-             HorizontalAlignment="Center"
-             VerticalAlignment="Center" />
+    <Grid>
+        <!-- Main selection view (default) -->
+        <Border IsVisible="{Binding !IsExecutionVisible}"
+                Padding="24">
+            <DockPanel LastChildFill="True">
+
+                <TextBlock DockPanel.Dock="Top"
+                           Text="Algorithm Workbench"
+                           FontSize="24" FontWeight="Bold"
+                           Margin="0,0,0,16" />
+
+                <!-- Settings button (top-right) -->
+                <Button DockPanel.Dock="Top"
+                        Content="Settings"
+                        Command="{Binding OpenSettingsCommand}"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,0,16" />
+
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                               VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="20" MaxWidth="640" HorizontalAlignment="Stretch">
+
+                        <StackPanel Spacing="6">
+                            <TextBlock Text="Laboratory work" FontWeight="SemiBold" />
+                            <ComboBox ItemsSource="{Binding Labs}"
+                                       SelectedItem="{Binding SelectedLab}"
+                                       DisplayMemberBinding="{Binding DisplayName}"
+                                       IsEnabled="{Binding !IsLoadingLabs}"
+                                       MinWidth="400"
+                                       PlaceholderText="Select a lab…" />
+                        </StackPanel>
+
+                        <StackPanel Spacing="6">
+                            <TextBlock Text="Algorithm" FontWeight="SemiBold" />
+                            <ComboBox ItemsSource="{Binding Algorithms}"
+                                       SelectedItem="{Binding SelectedAlgorithm}"
+                                       DisplayMemberBinding="{Binding DisplayName}"
+                                       IsEnabled="{Binding !IsLoadingLabs}"
+                                       MinWidth="400"
+                                       PlaceholderText="Select an algorithm…" />
+                        </StackPanel>
+
+                        <Button Content="Start"
+                                Command="{Binding StartCommand}"
+                                HorizontalAlignment="Left"
+                                Classes="accent"
+                                Margin="0,4,0,0" />
+
+                    </StackPanel>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+
+        <!-- Algorithm Execution view (shown after Start) -->
+        <Panel IsVisible="{Binding IsExecutionVisible}">
+            <ContentControl DataContext="{Binding Execution}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch" />
+        </Panel>
+
+        <!-- Embedded Settings dialog (overlay) -->
+        <Panel IsVisible="{Binding Settings, Converter={x:Static ObjectConverters.IsNotNull}}">
+            <Rectangle Fill="#80000000" />
+            <ContentControl DataContext="{Binding Settings}"
+                            MaxWidth="520" MaxHeight="420"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+        </Panel>
+    </Grid>
 
 </Window>

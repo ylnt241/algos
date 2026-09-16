@@ -1,0 +1,55 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:DesktopView.ViewModels"
+             xmlns:sp="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="520"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
+             x:Class="DesktopView.Views.AlgorithmExecutionView"
+             x:DataType="vm:AlgorithmExecutionViewModel">
+
+    <DockPanel LastChildFill="True">
+        <!-- Header / toolbar -->
+        <Border DockPanel.Dock="Top"
+                Padding="16,12"
+                Background="{DynamicResource SystemRegionBrush}">
+            <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0" Spacing="4">
+                    <TextBlock Text="{Binding AlgorithmTitle}"
+                               FontSize="18" FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding TheoreticalComplexity, StringFormat='Theoretical complexity: {0}'}"
+                               FontSize="13" Opacity="0.75" />
+                    <TextBlock Text="{Binding Status}"
+                               FontSize="12" Opacity="0.7" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            Spacing="8"
+                            VerticalAlignment="Center">
+                    <Button Content="Back"
+                            Command="{Binding BackCommand}" />
+                    <Button Content="Run benchmark"
+                            Command="{Binding RunCommand}"
+                            IsEnabled="{Binding !IsRunning}"
+                            Classes="accent" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Chart: wrapped in a Grid with a * row so the AvaPlot always receives a
+             non-zero size and can render. -->
+        <Grid RowDefinitions="*"
+              Margin="12"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch">
+            <sp:AvaPlot x:Name="PlotControl"
+                        Grid.Row="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch" />
+        </Grid>
+    </DockPanel>
+
+</UserControl>

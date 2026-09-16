@@ -19,15 +19,23 @@ public class ViewLocator : IDataTemplate
         if (param is null)
             return null;
 
-        var name = param.GetType().FullName!.Replace("ViewModel", "View", StringComparison.Ordinal);
-        var type = Type.GetType(name);
+        var type = param.GetType();
+        var full = type.FullName!;
+        // View models live in DesktopView.ViewModels; their views live in DesktopView.Views.
+        // Map the namespace and strip the "Model" suffix from the type name, then resolve the
+        // view type using its assembly-qualified name so Type.GetType always succeeds.
+        var viewName = full
+            .Replace("DesktopView.ViewModels", "DesktopView.Views", StringComparison.Ordinal)
+            .Replace("ViewModel", "View", StringComparison.Ordinal);
+        var qualified = $"{viewName}, {type.Assembly.GetName().Name}";
+        var viewType = Type.GetType(qualified);
 
-        if (type != null)
+        if (viewType != null)
         {
-            return (Control)Activator.CreateInstance(type)!;
+            return (Control)Activator.CreateInstance(viewType)!;
         }
 
-        return new TextBlock { Text = "Not Found: " + name };
+        return new TextBlock { Text = "Not Found: " + viewName };
     }
 
     public bool Match(object? data)
