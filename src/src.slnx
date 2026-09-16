@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Algrorithms/Algrorithms.csproj" />
+  <Project Path="DesktopView/DesktopView.csproj" />
+</Solution>
